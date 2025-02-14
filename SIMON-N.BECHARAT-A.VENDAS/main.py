@@ -68,23 +68,9 @@ score = 0
 init_chain = 5
 chain = 0
 
-# Colors
-red = (255, 0, 0)
-green = (0, 255, 0)
-blue = (0, 0, 255)
-
 # Lists
-color_list = [red, blue, green]
-led_list = [led_A, led_B, led_C, led_D, led_E]
 btn_list = [btn_A, btn_B, btn_C, btn_D, btn_E]
-
-#endregion
-
-
-
-#region Difficulty()
-
-# Here will go all the difficulty related functions
+led_list = [led_A, led_B, led_C, led_D, led_E]
 
 #endregion
 
@@ -93,29 +79,25 @@ btn_list = [btn_A, btn_B, btn_C, btn_D, btn_E]
 #region Start()
 
 def start_game():
+    screen.fill(0)  # Clear the screen
+    global score, best_score, patern, chain, init_chain, btn_list
     # Check the score
     if score > best_score:
         best_score = score
 
     # Show the starting menu
-    oled.fill(0)
     screen.text('Best Score : ' + str(best_score), 0, 0)
     screen.text('Last Score : ' + str(score), 0, 10)
-    screen.text('Press any button', 0, 30)
-    screen.text('To START !', 0, 40)
+    # screen.text('Press any button to START!', 0, 30)
     screen.show()
 
     # Reset the variable
     patern = []
-    score = 0
     chain = init_chain
 
     # Start the game when a button is pressed
-    for btn in range(btn_list):
-        # Wait for in input
-        input() # A vérifier parce que je suis vraiment pas sûr de moi
-        if btn.value() == 1:
-        testSimon1(5)
+    # input("Press Enter to start...")
+    light_patern(chain, btn_list)
 
 #endregion
 
@@ -123,60 +105,92 @@ def start_game():
 
 #region Light()
 
-def light_patern():
+def light_patern(chain, btn_list):
+    global patern
+    patern = []  # Reset the patern for the new game
     for x in range(chain):
-        # Clear all leds
-        leds.clear()
-
         # Define a led
-        led_r = random.randrange(0, len(led_list))
+        led_r = random.randrange(len(led_list))
         # Save this led in a list
         patern.append(led_r)
-        # Set up the led
-        leds.set_pixel(led_list[led_r], blue)
-
         # Show the led
+        leds.set_pixel(led_list[led_r], (0, 0, 255))
         leds.show()
-
-        # Wait 0.5s
         time.sleep(0.5)
-
-        # Clear the led
         leds.clear()
         leds.show()
-
-        # Wait 0.75s
         time.sleep(0.75)
     # Next step of the game
-    check_patern()
+    update_screen("It's your turn !")
+    check_patern(patern, btn_list)
 
 #endregion
 
+def update_screen(text_params) :
+    screen.fill(0)  # Clear the screen
+    screen.text('Best Score : ' + str(best_score), 0, 0)
+    screen.text('Last Score : ' + str(score), 0, 10)
+    screen.text(text_params, 0, 30)
+    screen.show()
 
-#region Check()
+def restart_game():
+    global score, best_score, patern, chain, init_chain
+    time.sleep(2) 
+    start_game()
 
-def check_patern():
-    for x in range(patern):
-        # Wait for in input
-        input() # A vérifier parce que je suis vraiment pas sûr de moi
+def game_over():
+    global score, best_score, patern, chain, init_chain
+    if score > best_score:
+        best_score = score
+    score = 0
+    update_screen("Game Over!")
+    time.sleep(2)  # Laisser le temps de voir la fin du jeu
+    start_game()
 
-        # If it's the right button, add score
-        if btn_list[x].value() == 1:
-            score += 1
-        # If it's not the right button, start a new game
-        else:
-            start_game()
-    
-    # New round
+def check_patern(patern, btn_list):
+    global score, chain
+    for expected_led in patern:
+        # Attente d'un appui sur un bouton
+        pressed = False
+        btn_pressed = False
+        while not pressed:
+            if btn_list[0].value() :
+                user_input = btn_list[0]
+                btn_pressed = True
+            if btn_list[1].value() :
+                user_input = btn_list[1]
+                btn_pressed = True
+            if btn_list[2].value() :
+                user_input = btn_list[2]
+                btn_pressed = True
+            if btn_list[3].value() :
+                user_input = btn_list[3]
+                btn_pressed = True
+            if btn_list[4].value() :
+                user_input = btn_list[4]
+                btn_pressed = True
+            if btn_pressed == True :
+                if user_input in btn_list:
+                    pressed = True
+                    print(btn_list.index(user_input), expected_led)
+                    time.sleep(0.5)
+                    if btn_list.index(user_input) == expected_led:
+                        score += 1
+                        update_screen("")
+                    else:
+                        game_over()
+                        return
+            time.sleep(0.1)  # Petite pause pour éviter une détection multiple
+
+    # Nouveau tour
+    update_screen("Good job!")
     chain += 1
-    light_patern()
-
-#endregion
-
-
+    time.sleep(1)
+    restart_game()
 
 #region Exec
 
 start_game()
 
 #endregion
+
