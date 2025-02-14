@@ -13,7 +13,7 @@
 
 L'écran OLED affiche le taux de CO2 en ppm par défaut, et le "feu tricolore" (les 3 LEDs en gros) affichent une couleur en fonction du taux de CO2.
 
-Pour changer le mode, il faut scanner une tag NFC dont l'UID est inclus dans la liste des UID autorisés (main.cpp:53).
+Pour changer le mode, il faut scanner un tag NFC dont l'UID est inclus dans la liste des UID autorisés (main.cpp:53).
 
 Le bouton est alors "activé" pendant 5 secondes et l'utilisateur peut changer le mode d'affichage en appuyant dessus.
 
