@@ -172,12 +172,22 @@ def check_patern(patern, btn_list):
             if btn_pressed == True :
                 if user_input in btn_list:
                     pressed = True
-                    print(btn_list.index(user_input), expected_led)
                     time.sleep(0.5)
                     if btn_list.index(user_input) == expected_led:
+                        leds.set_pixel(led_list[expected_led], (255, 0, 0))
+                        leds.show()
+                        time.sleep(0.5)
+                        leds.clear()
+                        leds.show()
                         score += 1
                         update_screen("")
                     else:
+                        leds.set_pixel(led_list[expected_led], (0, 0, 255))
+                        leds.set_pixel(led_list[btn_list.index(user_input)], (0, 255, 0))
+                        leds.show()
+                        time.sleep(1)
+                        leds.clear()
+                        leds.show()
                         game_over()
                         return
             time.sleep(0.1)  # Petite pause pour éviter une détection multiple
