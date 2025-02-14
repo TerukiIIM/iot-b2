@@ -25,6 +25,9 @@ Pour utiliser les composants dans la bonne direction, il faut les orienter par r
 - Joystick avec les pins vers la gauche
 
 ## Fonctionnement
+### Vidéo
+https://drive.google.com/file/d/1Nm3mVY1rS_XQ6u_dP0aBToT_o6e_HWou/view?usp=sharing
+
 ### Jeux
 
 - Lancer mainmenu.py depuis Thonny
