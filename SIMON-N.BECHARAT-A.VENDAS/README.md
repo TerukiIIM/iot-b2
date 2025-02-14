@@ -9,6 +9,11 @@ Jeu du Simon, où il s'agit de se remémorer les couleurs affichées sur un écr
 - Python 3.x doit être installé sur votre machine.
 - Les bibliothèques nécessaires doivent être installées (machine, ssd1306, neopixel, etc.).
 
+### Composants
+- Raspberry pico-W
+- Led ring : AZDelivery LED Ring 5V RGB compatible avec WS2812B 12-Bit 
+- Screen : SGK-OLED-003
+
 ### Installation
 
 1. Clonez le dépôt sur votre machine locale :
