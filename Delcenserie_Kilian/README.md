@@ -2,6 +2,8 @@
 
 Ce projet est un simulateur de combat Pokémon interactif utilisant une Raspberry Pi Pico W. Les joueurs sélectionnent leur Pokémon en scannant des badges RFID, puis interagissent avec le jeu via un écran OLED et des boutons.
 
+vidéo de fonctionnement: https://vimeo.com/1056495147/868cfdf95d
+
 ## Matériel Nécessaire
 
 - **Raspberry Pi Pico W**
